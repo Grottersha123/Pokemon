@@ -1,7 +1,14 @@
 import sqlite3
 from PIL import Image
 import os
-path = os.getcwd().replace('\\','/') 
+path = os.getcwd()
+path = os.path.splitdrive(path)
+p = ''
+for i in path:
+    p+= i.replace("\\","/")
+print(p)
+
+
 def l(m):
     l = ()
     k = ''
@@ -10,7 +17,16 @@ def l(m):
     for i in l:
         k = i
     return k
-    
+#список кортежей покемошек
+def list_pokemon():
+    con = sqlite3.connect('Db_Pokemon.db')
+    cur = con.cursor()
+    cur.execute('SELECT name From Pokemon')
+    return cur.fetchall()
+
+
+
+#Основная функция для работы с бд и таблицей
 def ev(name):
     new = ''
     con = sqlite3.connect('Db_Pokemon.db')
@@ -18,6 +34,7 @@ def ev(name):
     t = (name,)
     cur.execute('SELECT evolution From Pokemon Where name=?',t)
     a = l(cur.fetchall())
+#если все пусто в итогом выводеииз таблице значит такого покемона нет 
     if a == '':
         return ['We do not have this pokemon']
     if name == 'Eevee' or  a == 'Eevee':
@@ -89,7 +106,7 @@ def spliting(pic):
         p = 0
         z = 0
         x = 0
-        path = 'C:/Users/Grotter/Documents/Всякие проекты/Pokemon/Pokemon/'
+        path = './Pokemon/'
         for i in pic:
             im1 = Image.open(path+i+'.bmp')
             x,y = im1.size
@@ -107,10 +124,12 @@ def spliting(pic):
 
         
 def all():
-    t = ev('Ambradsf')
+    t = ev('Nidor')
+    print(t)
     y = id_p(t)
+    print(y)
     spliting(y)
-   
+
 
     
 all()
