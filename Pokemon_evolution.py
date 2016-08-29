@@ -1,6 +1,7 @@
 import sqlite3
 from PIL import Image
-
+import os
+path = os.getcwd().replace('\\','/') 
 def l(m):
     l = ()
     k = ''
@@ -18,9 +19,9 @@ def ev(name):
     cur.execute('SELECT evolution From Pokemon Where name=?',t)
     a = l(cur.fetchall())
     if a == '':
-        return 'We do not have this pokemon'
+        return ['We do not have this pokemon']
     if name == 'Eevee' or  a == 'Eevee':
-        t = (name,)
+        t = ('Eevee',)
         p = []
         m = [['Eevee'],['Eevee'],['Eevee']]
         cur.execute('SELECT name From Pokemon Where evolution=?',t)
@@ -68,9 +69,8 @@ def id_p(pokemon):
     id_n = []
     con = sqlite3.connect('Db_Pokemon.db')
     cur = con.cursor()
-    cur.execute('SELECT evolution From Pokemon Where name=?',t)
     a = l(cur.fetchall())
-    if pokemon == 'Eevee' and a = 'Eevee':
+    if ['Eevee', 'Vaporeon'] in pokemon  :
         return [['133','134'],['133','135'],['133','136']]
     for i in pokemon:
         t = (i,)
@@ -78,14 +78,18 @@ def id_p(pokemon):
         a = l(cur.fetchall())
         id_n.append(a)
     return id_n
-    
+def spl(pic):
+    for i in pic:
+        spliting(i)
 def spliting(pic):
-    try:
+    if ['133','134'] in pic:
+        spl(pic)
+        return
+    try:  
         p = 0
         z = 0
         x = 0
-        path = 'D:/Python/Pokemon/'
-        
+        path = 'C:/Users/Grotter/Documents/Всякие проекты/Pokemon/Pokemon/'
         for i in pic:
             im1 = Image.open(path+i+'.bmp')
             x,y = im1.size
@@ -103,10 +107,10 @@ def spliting(pic):
 
         
 def all():
-    t = ev('Eevee')
-    print(t)
-    #y = id_p(t)
-    #spliting(y)
+    t = ev('Ambradsf')
+    y = id_p(t)
+    spliting(y)
+   
 
     
 all()
